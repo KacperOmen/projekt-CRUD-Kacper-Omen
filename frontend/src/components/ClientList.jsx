@@ -10,6 +10,10 @@ export default function ClientList({ clients, onEdit, onDelete }) {
               <div>
                 <p className="font-bold">{client.name} {client.surname}</p>
                 <p>Rental: {client.rental_period} days | Date: {client.rental_date}</p>
+                 <div className="text-sm text-gray-600">
+                  {client.email && <p>📧 {client.email}</p>}
+                  {client.phone && <p>📞 {client.phone}</p>}
+                </div>
               </div>
               <div className="space-x-2">
                 <button 

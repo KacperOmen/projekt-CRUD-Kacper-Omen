@@ -5,6 +5,8 @@ export default function ClientForm({ onCreate, onUpdate, editingClient }) {
   const [surname, setSurname] = useState("");
   const [rentalPeriod, setRentalPeriod] = useState("");
   const [rentalDate, setRentalDate] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
 
   useEffect(() => {
     if (editingClient) {
@@ -13,7 +15,7 @@ export default function ClientForm({ onCreate, onUpdate, editingClient }) {
       setRentalPeriod(editingClient.rental_period);
       setRentalDate(editingClient.rental_date.slice(0,10)); 
     } else {
-      setName(""); setSurname(""); setRentalPeriod(""); setRentalDate("");
+      setName(""); setSurname(""); setRentalPeriod(""); setRentalDate("");setEmail(""); setPhone("");
     }
   }, [editingClient]);
 
@@ -24,13 +26,15 @@ export default function ClientForm({ onCreate, onUpdate, editingClient }) {
       surname,
       rental_period: Number(rentalPeriod),
       rental_date: rentalDate,
+      email,
+      phone,
     };
     if (editingClient) {
       onUpdate(editingClient._id, clientData);
     } else {
       onCreate(clientData);
     }
-    setName(""); setSurname(""); setRentalPeriod(""); setRentalDate("");
+    setName(""); setSurname(""); setRentalPeriod(""); setRentalDate(""); setEmail(""); setPhone("");
   };
 
   return (
@@ -61,6 +65,21 @@ export default function ClientForm({ onCreate, onUpdate, editingClient }) {
         placeholder="Rental date" 
         value={rentalDate} 
         onChange={e => setRentalDate(e.target.value)} 
+      />
+
+       <input 
+        type="email"
+        className="border p-2 w-full mb-2" 
+        placeholder="Email (optional)" 
+        value={email} 
+        onChange={e => setEmail(e.target.value)} 
+      />
+      <input 
+        type="tel"
+        className="border p-2 w-full mb-2" 
+        placeholder="Phone (optional)" 
+        value={phone} 
+        onChange={e => setPhone(e.target.value)} 
       />
       <button className="bg-blue-500 text-white px-4 py-2 rounded">
         {editingClient ? "Update" : "Add"}

@@ -21,6 +21,19 @@ const ClientSchema = mongoose.Schema(
             type: Date,
             required: [true, "Please enter rental_date"],
         },
+        email: {
+            type: String,
+            required: false,
+        match: [/^\S+@\S+\.\S+$/, 'Please enter a valid email']
+        },
+        phone: {
+            type: String,
+            required: false,
+            match: [/^\+?[\d\s-]+$/, 'Please enter a valid phone number']
+            },
+
+        
+        
     },
     {
         timestamps: true,
