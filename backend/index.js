@@ -16,7 +16,7 @@ app.get('/', (req, res) => {
 mongoose.connect('mongodb+srv://admin:admin@zadanie1db.owbdljg.mongodb.net/Node-API?retryWrites=true&w=majority&appName=Zadanie1DB')
 .then(() => {
     console.log("Connected to db");
-    app.listen(3000, () => {
+    app.listen(process.env.PORT || 3000, () => {
         console.log('Server is running on port 3000');
     })
 })
