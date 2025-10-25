@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "https://projekt-crud-kacper-omen.onrender.com/api/clients";
+const API_URL = "https://projekt-crud-kacper-omen-backend.onrender.com/api/clients";
 
 export const getClients = () => axios.get(API_URL);
 export const createClient = (client) => axios.post(API_URL, client);
