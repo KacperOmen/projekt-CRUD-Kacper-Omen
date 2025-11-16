@@ -70,3 +70,11 @@ export const logout = async (req, res) => {
         res.status(500).json({success: false, message: error.message});
     }
 }
+
+export const getMe = (req, res) => {
+    try {
+        res.json({ user: req.user });
+    } catch (error) {
+        res.status(500).json({success: false, message: error.message});
+    }
+};
