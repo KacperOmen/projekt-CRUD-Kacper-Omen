@@ -9,7 +9,7 @@ const app = express()
 app.use(express.json())
 app.use(cookieParser())
 
-const allowedOrigins = ["https://projekt-crud-kacper-omen-backend.onrender.com", "http://localhost:5173"];
+const allowedOrigins = ["https://projekt-crud-kacper-omen.onrender.com", "http://localhost:5173"];
 app.use(cors({
     origin: allowedOrigins,
     credentials: true,
