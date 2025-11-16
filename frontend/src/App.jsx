@@ -4,6 +4,7 @@ import HomePage from './pages/HomePage';
 import {ToastContainer} from 'react-toastify';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
+import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
   return (
@@ -16,7 +17,11 @@ function App() {
         
         <Route 
           path='/clients' 
-          element={<ClientsPage />} 
+          element={
+            <ProtectedRoute>
+              <ClientsPage />
+            </ProtectedRoute>
+          } 
         />
       </Routes>
     </div>
