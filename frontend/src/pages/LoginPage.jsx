@@ -8,7 +8,7 @@ export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const { AUTH_API_URL } = useContext(AppContext);
+    const { AUTH_API_URL, setUser } = useContext(AppContext);
 
     const navigate = useNavigate();
 
@@ -19,6 +19,7 @@ export default function Login() {
             const { data } = await axios.post(`${AUTH_API_URL}/login`, { email, password });
             
             if (data.success) {
+                setUser(data);
                 setTimeout(() => navigate('/clients'), 0);
             } else {
                 toast.error(data.message);

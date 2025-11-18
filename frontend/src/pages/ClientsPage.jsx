@@ -52,7 +52,7 @@ export default function ClientsPage() {
         }
     };
 
-    const {AUTH_API_URL} = useContext(AppContext);
+    const {AUTH_API_URL, setUser} = useContext(AppContext);
 
     const navigate = useNavigate();
 
@@ -65,6 +65,7 @@ export default function ClientsPage() {
             const {data} = await axios.post(`${AUTH_API_URL}/logout`);
             
             if (data.success) {
+                setUser(null);
                 navigate('/');
             }
             else {
