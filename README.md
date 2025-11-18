@@ -73,7 +73,7 @@ GET /api/auth/me   Pobranie zalogowanego użytkownika
 
 ---
 
-![Zrzut strony głównej](../screenshots/home.png)
-![Zrzut strony logowania](../screenshots/login.png)
-![Zrzut strony rejestracji](../screenshots/register.png)
-![Zrzut strony klientów](../screenshots/clients.png)
+![Zrzut strony głównej](./screenshots/home.png)
+![Zrzut strony logowania](./screenshots/login.png)
+![Zrzut strony rejestracji](./screenshots/register.png)
+![Zrzut strony klientów](./screenshots/clients.png)
