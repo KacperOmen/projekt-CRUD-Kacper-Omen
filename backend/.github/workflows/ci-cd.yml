@@ -1,0 +1,54 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build_and_test:
+    runs-on: ubuntu-latest
+
+    env:
+      TEST_DB_URL: ${{ secrets.TEST_DB_URL }}
+      MONGO_URL: ${{ secrets.MONGO_URL }}
+      JWT_SECRET: ${{ secrets.JWT_SECRET }}
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm test
+
+  deploy_prod:
+    needs: build_and_test
+    runs-on: ubuntu-latest
+    if: success()
+
+    env:
+      RENDER_TOKEN: ${{ secrets.RENDER_TOKEN }}
+      MONGO_URL: ${{ secrets.MONGO_URL }}
+      JWT_SECRET: ${{ secrets.JWT_SECRET }}
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Deploy to Render
+        env:
+          RENDER_DEPLOY_KEY: ${{ secrets.RENDER_DEPLOY_KEY }}
+        run: |
+          curl -X POST "https://api.render.com/deploy/srv-d3ud6d8dl3ps73f2atvg?key=$RENDER_DEPLOY_KEY" \
+          -H "Accept: application/json" \
+          -H "Authorization: Bearer $RENDER_TOKEN"
+
+      - name: Smoke test
+        run: |
+          curl -f https://projekt-crud-kacper-omen-backend.onrender.com/ || exit 1
