@@ -4,8 +4,21 @@ Aplikacja CRUD do zarządzania klientami. Użytkownicy mogą się zarejestrować
 zalogować i po uwierzytelnieniu wykonywać operacje CRUD na klientach. 
 Dostęp do wszystkich funkcji CRUD jest zabezpieczony i możliwy tylko dla zalogowanych użytkowników.
 
-Adres strony: https://projekt-crud-kacper-omen.onrender.com
-Adres backendu strony: https://projekt-crud-kacper-omen-backend.onrender.com
+---
+
+Production
+
+Frontend: https://projekt-crud-kacper-omen.onrender.com
+
+Backend: https://projekt-crud-kacper-omen-backend.onrender.com
+
+---
+
+Staging (CI / Render Deploy Hook)
+
+Brak własnej domeny — staging tworzy się automatycznie poprzez pipeline GitHub Actions.
+
+Backend zostaje przebudowany po wywołaniu Deploy Hook.
 
 ---
 
@@ -39,6 +52,19 @@ npm install
 npm run dev
 
 Frontend będzie dostępny pod adresem http://localhost:5173
+
+---
+
+Testy
+
+Projekt zawiera testy unit i integration.
+
+Uruchomienie testów:
+
+cd backend
+npm test
+
+Testy integracyjne używają bazy testowej skonfigurowanej w .env.test.
 
 ---
 

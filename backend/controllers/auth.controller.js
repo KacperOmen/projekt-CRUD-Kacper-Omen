@@ -1,6 +1,9 @@
 import User from "../models/user.model.js";
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken'
+import dotenv from "dotenv"
+
+dotenv.config();
 
 export const register = async (req, res) => {
     try {
@@ -46,7 +49,7 @@ export const login = async (req, res) => {
             return res.status(401).json({success: false, message: "Invalid email or password"});
         }
 
-        const token = jwt.sign({id: user._id}, "secret", {expiresIn: '7d'});
+        const token = jwt.sign({id: user._id}, process.env.JWT_SECRET, {expiresIn: '7d'});
         res.cookie('token', token, {
             httpOnly: true,
             sameSite: "none",

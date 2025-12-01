@@ -25,13 +25,26 @@ export const getClient = async (req, res) => {
 }
 
 export const postClient = async (req, res) => {
-    try {
-        const client = await Client.create(req.body)
-        res.status(200).json(client)
-    } catch (error) {
-        res.status(500).json({message: error.message})
+  try {
+    const { name, surname, rental_period, rental_date, email } = req.body;
+
+    if (!name || !surname || !rental_period || !rental_date) {
+      return res.status(400).json({ message: "Missing required fields" });
     }
-}
+
+    if (email) {
+      const existing = await Client.findOne({ email });
+      if (existing) {
+        return res.status(409).json({ message: "Client already exists" });
+      }
+    }
+
+    const client = await Client.create(req.body);
+    res.status(201).json(client); 
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 
 export const updateClient = async (req, res) => {
     try {
