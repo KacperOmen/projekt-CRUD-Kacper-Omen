@@ -29,7 +29,7 @@ export const postClient = async (req, res) => {
     const { name, surname, rental_period, rental_date, email } = req.body;
 
     if (!name || !surname || !rental_period || !rental_date) {
-      return res.status(200).json({ message: "Missing required fields" });
+      return res.status(400).json({ message: "Missing required fields" });
     }
 
     if (email) {
