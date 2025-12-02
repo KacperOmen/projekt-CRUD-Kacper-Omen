@@ -6,84 +6,67 @@ on:
       - main
 
 jobs:
-  build_and_test:
+  build_and_test_backend:
     runs-on: ubuntu-latest
-
     env:
       TEST_DB_URL: ${{ secrets.TEST_DB_URL }}
       MONGO_URL: ${{ secrets.MONGO_URL }}
       JWT_SECRET: ${{ secrets.JWT_SECRET }}
-
     steps:
       - uses: actions/checkout@v3
-
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18
-
-      - name: Install dependencies
+      - name: Install backend dependencies
         working-directory: backend
         run: npm install
-
-      - name: Run tests
+      - name: Run backend tests
         working-directory: backend
         run: npm test
 
-  deploy_prod:
-    needs: build_and_test
+  deploy_backend:
+    needs: build_and_test_backend
     runs-on: ubuntu-latest
     if: success()
-
     env:
       RENDER_TOKEN: ${{ secrets.RENDER_TOKEN }}
+      RENDER_BACKEND_DEPLOY_KEY: ${{ secrets.RENDER_DEPLOY_KEY }}
       MONGO_URL: ${{ secrets.MONGO_URL }}
       JWT_SECRET: ${{ secrets.JWT_SECRET }}
-
     steps:
       - uses: actions/checkout@v3
-
-      - name: Deploy to Render
+      - name: Deploy Backend to Render
         working-directory: backend
-        env:
-          RENDER_DEPLOY_KEY: ${{ secrets.RENDER_DEPLOY_KEY }}
-          RENDER_TOKEN: ${{ secrets.RENDER_TOKEN }}
         run: |
           curl -X POST "https://api.render.com/deploy/srv-d4nd42c9c44c738opaeg?key=$RENDER_DEPLOY_KEY" \
           -H "Accept: application/json" \
           -H "Authorization: Bearer $RENDER_TOKEN"
-
-      - name: Smoke test
+      - name: Smoke test Backend
         run: |
           curl -f https://projekt-crud-kacper-omen-backend.onrender.com/ || exit 1
 
-    deploy_frontend:
+  deploy_frontend:
     needs: build_and_test_backend
     runs-on: ubuntu-latest
     if: success()
-
     env:
       RENDER_TOKEN: ${{ secrets.RENDER_TOKEN }}
       RENDER_FRONTEND_DEPLOY_KEY: ${{ secrets.RENDER_FRONTEND_DEPLOY_KEY }}
-
     steps:
       - uses: actions/checkout@v3
-
       - name: Install frontend dependencies
         working-directory: frontend
         run: npm install
-
       - name: Build frontend
         working-directory: frontend
         run: npm run build
-
       - name: Deploy Frontend to Render
         working-directory: frontend
         run: |
           curl -X POST "https://api.render.com/deploy/srv-d3ud7k2li9vc73c17t0g?key=$RENDER_FRONTEND_DEPLOY_KEY" \
           -H "Accept: application/json" \
           -H "Authorization: Bearer $RENDER_TOKEN"
-
       - name: Smoke test Frontend
         run: |
           curl -f https://projekt-crud-kacper-omen.onrender.com/ || exit 1
