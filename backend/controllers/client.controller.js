@@ -49,7 +49,7 @@ export const postClient = async (req, res) => {
       fieldErrors.push({ field: "phone", message: "Invalid phone format" });
 
     if (fieldErrors.length > 0) {
-      return res.status(200).json(formatError(400, "Bad request", fieldErrors));
+      return res.status(400).json(formatError(400, "Bad request", fieldErrors));
     }
 
     if (email) {
