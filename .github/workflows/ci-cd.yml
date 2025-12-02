@@ -47,8 +47,9 @@ jobs:
         working-directory: backend
         env:
           RENDER_DEPLOY_KEY: ${{ secrets.RENDER_DEPLOY_KEY }}
+          RENDER_TOKEN: ${{ secrets.RENDER_TOKEN }}
         run: |
-          curl -X POST "https://api.render.com/deploy/srv-d3ud6d8dl3ps73f2atvg?key=$RENDER_DEPLOY_KEY" \
+          curl -X POST "https://api.render.com/deploy/srv-d4nd42c9c44c738opaeg?key=$RENDER_DEPLOY_KEY" \
           -H "Accept: application/json" \
           -H "Authorization: Bearer $RENDER_TOKEN"
 
